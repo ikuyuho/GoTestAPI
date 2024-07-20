@@ -1,0 +1,48 @@
+GoTestApi
+
+環境作成
+ディレクトリ作成
+go mod init GoTestApi
+go get -u github.com/gin-gonic/gin
+go get -u github.com/dgrijalva/jwt-go
+go get github.com/jmoiron/sqlx
+go get github.com/go-sql-driver/mysql
+
+DBアクセス 作成
+mysql -u root -p
+
+CREATE DATABASE IF NOT EXISTS go_test_api;
+
+use go_test_api
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name varchar(100) NOT NULL,
+  user_id varchar(30) NOT NULL,
+  password varchar(30) NOT NULL
+)
+
+ディレクトリ構成
+GoTestApi/
+├── cmd/                            // コマンドラインアプリケーションのエントリーポイント
+│   └── myapp/                      // アプリケーション名
+│       └── main.go                 // メインエントリーポイント
+├── internal/                       // 内部パッケージ（外部公開しない）
+│   ├── auth/                       // 認証関連のパッケージ
+│   │   ├── auth.go                 // 認証の共通処理
+│   │   ├── login.go                // ログイン処理
+│   │   └── register.go             // ユーザー登録処理
+│   ├── config/                     // 設定ファイルの読み込みと管理
+│   │   └── config.go               // 設定ファイルの読み込みロジック
+│   ├── db/                         // データベース接続と管理
+│   │   └── db.go                   // データベース接続の初期化
+│   └── user/                       // ユーザー関連の処理
+│       ├── profile.go              // ユーザープロファイルの処理
+│       └── user.go                 // ユーザー関連の共通処理
+├── pkg/                            // 再利用可能なパッケージ
+│   └── models/                     // データベースモデル
+│       └── user.go                 // ユーザーモデルの定義
+├── config.json                     // アプリケーションの設定ファイル
+├── go.mod                          // Goモジュールの設定ファイル
+├── go.sum                          // Goモジュールの依存関係を管理するファイル
+└── memo.txt                        // このファイル
